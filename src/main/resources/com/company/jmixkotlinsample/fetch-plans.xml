@@ -1,0 +1,5 @@
+<fetchPlans xmlns="http://jmix.io/schema/core/fetch-plans">
+    <fetchPlan entity="Floor_" name="floor-fetch-plan" extends="_base">
+        <property name="room" fetchPlan="_base"/>
+    </fetchPlan>
+</fetchPlans>

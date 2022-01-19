@@ -1,0 +1,98 @@
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://floorBrowse.caption"
+        focusComponent="table">
+    <data>
+        <collection id="floorsDc"
+                    class="com.company.jmixkotlinsample.entity.Floor"
+                    fetchPlan="floor-fetch-plan">
+            <loader id="floorsDl">
+                <query>
+                    <![CDATA[select e from Floor_ e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="floorDc"
+                  class="com.company.jmixkotlinsample.entity.Floor"
+                  fetchPlan="floor-fetch-plan">
+            <loader/>
+            <collection id="roomDc" property="room"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="save" icon="OK" caption="msg:///actions.Ok" shortcut="CTRL-ENTER"/>
+        <action id="cancel" icon="CANCEL" caption="msg:///actions.Cancel" description="Esc"/>
+    </actions>
+    <dialogMode height="600" width="800"/>
+    <layout>
+        <split id="split" height="100%" orientation="horizontal" reversePosition="true" width="100%">
+            <vbox id="lookupBox" expand="table" height="100%" margin="false,true,false,false" spacing="true">
+                <filter id="filter" dataLoader="floorsDl">
+                    <properties include=".*"/>
+                </filter>
+                <groupTable id="table"
+                            width="100%"
+                            dataContainer="floorsDc">
+                    <actions>
+                        <action id="create" type="create"/>
+                        <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
+                    </actions>
+                    <columns>
+                    </columns>
+                    <simplePagination/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="createBtn" action="table.create"/>
+                        <button id="editBtn" action="table.edit"/>
+                        <button id="removeBtn" action="table.remove"/>
+                    </buttonsPanel>
+                </groupTable>
+                <hbox id="lookupActions" spacing="true" visible="false">
+                    <button action="lookupSelectAction"/>
+                    <button action="lookupCancelAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="editBox" height="100%" margin="false,false,false,true" expand="tabSheetBox" spacing="true">
+                <vbox id="tabSheetBox">
+                    <tabSheet id="tabSheet" height="100%">
+                        <tab id="mainTab" caption="msg://floor.editorMainTab.caption" margin="true">
+                            <scrollBox id="fieldGroupBox"
+                                       height="100%">
+                                <form id="form" dataContainer="floorDc">
+                                    <column width="350px">
+                                    </column>
+                                </form>
+                            </scrollBox>
+                        </tab>
+                        <tab id="roomTab" caption="msg://com.company.jmixkotlinsample.entity/Floor.room"
+                             margin="true,false,false,false">
+                            <table id="roomTable" dataContainer="roomDc" width="100%" height="200px">
+                                <actions>
+                                    <action id="create" type="create"/>
+                                    <action id="edit" type="edit"/>
+                                    <action id="remove" type="remove"/>
+                                </actions>
+                                <columns>
+                                </columns>
+                                <buttonsPanel>
+                                    <button action="roomTable.create"/>
+                                    <button action="roomTable.edit"/>
+                                    <button action="roomTable.remove"/>
+                                </buttonsPanel>
+                            </table>
+                        </tab>
+                    </tabSheet>
+                </vbox>
+                <hbox id="actionsPane" spacing="true" visible="false">
+                    <button id="saveBtn" action="save"/>
+                    <button id="cancelBtn" action="cancel"/>
+                </hbox>
+            </vbox>
+        </split>
+    </layout>
+</window>

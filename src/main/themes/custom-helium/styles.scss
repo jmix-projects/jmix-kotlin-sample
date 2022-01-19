@@ -1,0 +1,8 @@
+@import "custom-helium-defaults";
+@import "addons";
+@import "custom-helium";
+
+.custom-helium {
+  @include addons;
+  @include custom-helium;
+}
